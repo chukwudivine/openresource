@@ -1,0 +1,230 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>openresource</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Open Resource</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'home' %}">Resources</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#down">Contact</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'upload' %}">Upload</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Masthead-->
+        <header class="masthead bg-primary text-white text-center">
+            <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Avatar Image-->
+                <img class="masthead-avatar mb-5" src="{% static 'assets/img/open_b.png' %}" alt="..." />
+                <!-- Masthead Heading-->
+                <h1 class="masthead-heading text-uppercase mb-0">Open Resource</h1>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Masthead Subheading-->
+                <p class="masthead-subheading font-weight-light mb-0">Handouts - Past Questions - Notes</p>
+            </div>
+            <!-- search bar starts -->
+            <form action="">
+            <div class="container">
+                <div class="row height d-flex justify-content-center align-items-center">
+                  <div class="col-md-8">
+                    <div class="search">
+                      <input type="text" name="search" list="datalistOptions" class="form-control" placeholder="Type to search..">
+                      <button class="btn btn-dark">Search</button>
+                      <datalist id="datalistOptions">
+                        {% for r in resource %}
+                        <option value="{{ r.name }}">
+                        {% endfor %}
+                      </datalist>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </form>
+            <style>
+                @import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+                .container{
+                    margin-top: 30px;
+                    margin-bottom: auto;
+                }
+
+                .search{
+                position: relative;
+                box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+                
+                }
+
+                .search input{
+
+                height: 60px;
+                text-indent: 25px;
+                border: 2px solid #d6d4d4;
+
+
+                }
+
+
+                .search input:focus{
+
+                box-shadow: none;
+                border: 2px solid rgb(46, 113, 52);
+
+
+                }
+
+                .search .fa-search{
+
+                position: absolute;
+                top: 20px;
+                left: 16px;
+
+                }
+
+                .search button{
+
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                height: 50px;
+                width: 110px;
+                background: rgba(3, 17, 19, 0.887);
+
+                }
+            </style>
+            <!-- search bar ends -->
+
+        </header>
+        <!-- Recent Section-->
+
+        <section class="page-section portfolio" id="portfolio">
+            <div class="container">
+                {%if searchTerm%}
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Search for {{searchTerm}}</h2>
+                {% else %}
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Resources</h2>
+                {%endif%}
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                {% if resource %}
+                <div class="row justify-content-center">
+                    {% for r in resource %}
+                    <div class="col-md-6 col-lg-3 mb-5">
+                        <div class="card text-center">
+                            <div class="card-header">
+                              Resource
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">{{r.name}}</h5>
+                              <a href="{{r.content.url}}" class="btn btn-primary">Download</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{ r.date }}
+                            </div>
+                          </div>   
+                    </div>
+                    {% endfor %}
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                    {% if resource.has_previous %}
+                        <li class="page-item"><a class="page-link active" href="?page=1">&laquo; 1</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ resource.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    {% if resource.has_next %}  
+                        <li class="page-item"><a class="page-link" href="?page={{ resource.next_page_number }}">NEXT</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ resource.paginator.num_pages }}">Last &raquo;</a></li>
+                    {% endif %}
+                    </ul>
+                  </nav>
+                  {%endif%}
+            </div>
+        </section>
+        <!-- About Section-->
+        <section class="page-section bg-primary text-white mb-0" id="about">
+            <div class="container">
+                <!-- About Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- About Section Content-->
+                <div class="row">
+                    <div class="col-lg-4 ms-auto"><p class="lead">
+                        openresource is a free platform for students to openly share and download school
+                        resources and material to help improve their studies.</p></div>
+                    <div class="col-lg-4 me-auto"><p class="lead">To download just type in your course code to have a listing of all available resource while to share all you need to do is convert those materials to
+                        pdf formats and then simple click on the upload button to share to other students.
+                    </p></div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer id="down" class="footer text-center">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">CONTACT</h4>
+                        <p class="lead mb-0">
+                            EMAIL: chukwudivineify@gmail.com
+                            <br />
+                            PHONE: 08134739911
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Social Network</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/chukwudivine"><i class="fab fa-fw fa-github"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/bit_vine"><i class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/divine-chukwu-5912231b4/"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">About The Developer</h4>
+                        <p class="lead mb-0">Chukwu Divine is a passionate programmer and a huge advocate for open source projects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Copyright Section-->
+        <div class="copyright py-4 text-center text-white">
+            <div class="container"><small>Copyright &copy; openresource.com <script type="text/javascript">var year = new Date();document.write(year.getFullYear());</script></small></div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

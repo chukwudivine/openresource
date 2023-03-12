@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload a resource</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'home' %}">Open Resource</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'home' %}">Resources</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#down">Contact</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'upload' %}">Upload</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    <header class="masthead bg-primary text-white text-center">
+     
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done! You're a natural giver</h4>
+            <p>Please make sure your uploads are well detailed and descriptive in the naming section.
+                <br>
+                Upload only pdf's, word and text document.
+                <br>
+                If you have any resource in an image format place convert them to pdf's.
+                <br>
+                Thanks on behalf of the general community.
+            </p>
+        </div>
+
+        <div class="container d-flex align-items-center flex-column">
+            <div class="container">
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Upload Resources</h2>
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+            </div>
+        
+            <form class="container" action="" method="POST">
+                {% csrf_token %}
+                <div class="container">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Resource Name</label>
+                        <input type="text" name="name" class="form-control" id="name" required>
+                      </div>
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Enter File</label>
+                        <input class="form-control form-control-sm" name="content" id="file" accept=".pdf, .txt, .doc, .docx" type="file" required>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-dark">Upload</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </header>
+
+<!-- Footer-->
+<footer id="down" class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <!-- Footer Location-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">CONTACT</h4>
+                <p class="lead mb-0">
+                    EMAIL: chukwudivineify@gmail.com
+                    <br />
+                    PHONE: 08134739911
+                </p>
+            </div>
+            <!-- Footer Social Icons-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Social Network</h4>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/chukwudivine"><i class="fab fa-fw fa-github"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/bit_vine"><i class="fab fa-fw fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/divine-chukwu-5912231b4/"><i class="fab fa-fw fa-linkedin-in"></i></a>
+            </div>
+            <!-- Footer About Text-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">About The Developer</h4>
+                <p class="lead mb-0">Chukwu Divine is a passionate programmer and a huge advocate for open source projects.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Copyright Section-->
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; openresource.com <script type="text/javascript">var year = new Date();document.write(year.getFullYear());</script></small></div>
+</div>
+
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
